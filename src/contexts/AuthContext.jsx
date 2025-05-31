@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   // API base URL
-  const API_URL = 'http://localhost:5000/api';
+  const API_URL = 'https://backend-app-by7e.onrender.com/api';
 
   const saveUserToLocalStorage = (user) => {
     localStorage.setItem('user_data', JSON.stringify(user));

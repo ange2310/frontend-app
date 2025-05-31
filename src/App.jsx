@@ -134,7 +134,7 @@ function AppContent() {
           }
           
           if (endpoint) {
-            const response = await fetch(`http://localhost:5000/api${endpoint}`, {
+            const response = await fetch(`https://backend-app-by7e.onrender.com/api${endpoint}`, {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }

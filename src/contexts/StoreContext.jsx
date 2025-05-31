@@ -4,7 +4,7 @@ export const StoreContext = createContext(null)
 const StoreContextProvider = (props) => {
 
     const [cartItems, setCartItems] = useState({});
-    const API_URL = 'http://localhost:5000/api';
+    const API_URL = 'https://backend-app-by7e.onrender.com/api';
     const [token,setToken] = useState("");
     const [food_list,setFoodList] = useState([]);
 
