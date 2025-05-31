@@ -3,7 +3,7 @@
 import axios from 'axios';
 import MisRestaurantes from '../components/admin/MisRestaurantes';
 
-const API_URL = 'http://localhost:5000/api'; 
+const API_URL = 'https://backend-app-by7e.onrender.com/api'; 
 
 const apiClient = axios.create({
   baseURL: API_URL,
