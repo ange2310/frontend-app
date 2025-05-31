@@ -1,0 +1,409 @@
+.pedidos-activos-container {
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pedidos-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.pedidos-header h1 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.pedidos-header p {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.pedidos-activos-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.pedido-activo-card {
+    max-width: 600px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pedido-activo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.pedido-header {
+    background-color: #f5f7fa !important;
+    border-bottom: 1px solid #eee;
+    padding: 15px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.restaurante-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.restaurante-info .icon {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+.restaurante-info h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin: 0;
+}
+
+.estado-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: white !important;
+    background-color: #3498db !important;
+}
+
+
+.pedido-body {
+    padding: 15px !important;
+    background-color: white !important;
+}
+
+.info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    background-color: white !important;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-row .icon {
+    color: #666 !important;
+    font-size: 18px;
+    margin-top: 2px;
+}
+
+.location-info, .cliente-info, .telefono-info {
+    flex: 1;
+}
+
+.direccion-label, .cliente-label, .telefono-label {
+    font-size: 13px;
+    color: #666 !important;
+    margin-bottom: 4px;
+    display: block;
+    background-color: transparent !important;
+}
+
+.direccion-text, .cliente-name, .telefono-number {
+    font-size: 14px;
+    color: #333 !important;
+    margin: 0;
+    background-color: transparent !important;
+}
+
+.cliente-name {
+    font-weight: 500;
+}
+
+.pedido-footer {
+    padding: 15px !important;
+    border-top: 1px solid #eee;
+    background-color: white !important;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.pickup-btn {
+    background-color: #3498db !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    min-width: 160px !important;
+    cursor: pointer !important;
+}
+
+.pickup-btn:hover {
+    background-color: #2980b9 !important; /* Azul más sutil para hover */
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.pickup-btn:active {
+    transform: translateY(1px) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.pickup-btn:disabled {
+    background-color: #95a5a6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7 !important;
+}
+
+.pickup-btn svg {
+    font-size: 18px !important;
+}
+
+.deliver-btn {
+    background-color: #27ae60 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    min-width: 160px !important;
+    cursor: pointer !important;
+}
+
+.deliver-btn:hover {
+    background-color: #219653 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.deliver-btn:active {
+    transform: translateY(1px) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.deliver-btn:disabled {
+    background-color: #95a5a6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7 !important;
+}
+
+.deliver-btn svg {
+    font-size: 18px !important;
+}
+
+.chat-button {
+    background-color: #e74c3c !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    min-width: 160px !important;
+    cursor: pointer !important;
+}
+
+.chat-button:hover {
+    background-color: #c0392b !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.chat-button:active {
+    transform: translateY(1px) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.chat-button:disabled {
+    background-color: #95a5a6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7 !important;
+}
+
+.chat-button svg {
+    font-size: 18px !important;
+}
+
+.btn-spinner {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.mensaje-estado {
+    padding: 0.5rem 0;
+    text-align: center;
+    font-style: italic;
+    color: #555;
+}
+
+.mensaje-estado.entregado {
+    color: green;
+    font-weight: bold;
+}
+
+.mensaje-estado p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.empty-pedidos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    color: var(--color-primary-light);
+    margin-bottom: 1.5rem;
+}
+
+.empty-pedidos h3 {
+    font-size: 1.4rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-pedidos p {
+    color: var(--color-text-secondary);
+    max-width: 300px;
+}
+
+.pedidos-loading, .pedidos-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--color-primary);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .action-buttons {
+        gap: 12px;
+    }
+    
+    .pickup-btn, .deliver-btn, .chat-button {
+        padding: 10px 18px !important;
+        min-width: 140px !important;
+    }
+    
+    .pedido-header {
+        padding: 12px !important;
+    }
+    
+    .pedido-body, .pedido-footer {
+        padding: 12px !important;
+    }
+    
+    .restaurante-info h3 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .pickup-btn, .deliver-btn, .chat-button {
+        width: 100% !important;
+    }
+}
+
+.warning-banner {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.pickup-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+.warning-banner-sm {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.action-button-sm.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc;
+}
