@@ -29,7 +29,7 @@ const RepartidorDashboard = () => {
           
           let disponiblesResponse, disponiblesData;
           try {
-            disponiblesResponse = await fetch('http://localhost:5000/api/pedidos/disponibles', {
+            disponiblesResponse = await fetch('https://backend-app-by7e.onrender.com/api/pedidos/disponibles', {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }
@@ -41,7 +41,7 @@ const RepartidorDashboard = () => {
           
           let activosResponse, activosData;
           try {
-            activosResponse = await fetch('http://localhost:5000/api/pedidos/repartidor/activos', {
+            activosResponse = await fetch('https://backend-app-by7e.onrender.com/api/pedidos/repartidor/activos', {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }
@@ -53,7 +53,7 @@ const RepartidorDashboard = () => {
           
           let historialResponse, historialData;
           try {
-            historialResponse = await fetch('http://localhost:5000/api/pedidos/repartidor/historial', {
+            historialResponse = await fetch('https://backend-app-by7e.onrender.com/api/pedidos/repartidor/historial', {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }

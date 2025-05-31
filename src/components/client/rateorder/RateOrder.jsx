@@ -146,7 +146,7 @@ const RateOrder = () => {
         }
         
         const axiosResponse = await axios.post(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/calificaciones/calificar/${pedidoId}`, 
+          `${import.meta.env.VITE_API_URL || 'https://backend-app-by7e.onrender.com/api'}/calificaciones/calificar/${pedidoId}`, 
           calificacionData,
           {
             headers: {

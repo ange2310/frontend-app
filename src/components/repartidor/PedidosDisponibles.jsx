@@ -70,7 +70,7 @@ const PedidosDisponibles = () => {
       setPedidoSeleccionadoId(pedidoSeleccionado.id);
       setTomandoPedido(true);
       
-      const response = await fetch(`http://localhost:5000/api/pedidos/asignar/${pedidoSeleccionado.id}`, {
+      const response = await fetch(`https://backend-app-by7e.onrender.com/api/pedidos/asignar/${pedidoSeleccionado.id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

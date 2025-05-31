@@ -44,7 +44,7 @@ const PedidosActivosPreview = () => {
       try {
         setLoading(true);
         
-        const response = await fetch('http://localhost:5000/api/pedidos/repartidor/activos', {
+        const response = await fetch('https://backend-app-by7e.onrender.com/api/pedidos/repartidor/activos', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -94,7 +94,7 @@ const PedidosActivosPreview = () => {
         throw new Error(`Estado no soportado: ${nuevoEstado}`);
       }
       
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`https://backend-app-by7e.onrender.com${endpoint}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
