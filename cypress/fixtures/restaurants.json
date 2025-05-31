@@ -17,6 +17,6 @@
     "nombre": "Burger House",
     "descripcion": "Hamburguesas artesanales",
     "imageUrl": null,
-    "categorias": ["Hamburguesa", "Americana"]
+    "categorias": ["Hamburguesa"]
   }
 ]

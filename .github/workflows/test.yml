@@ -1,3 +1,5 @@
+# .github/workflows/test.yml
+
 name: Test
 
 on:
@@ -5,18 +7,25 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
+  schedule:
+    # Ejecutar tests completos diariamente a las 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  NODE_VERSION: '18'
+  CYPRESS_CACHE_FOLDER: ~/.cache/Cypress
 
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
     
     - name: Install dependencies
@@ -26,24 +35,277 @@ jobs:
       run: npm run test:ci
     
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      
-  e2e-tests:
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: false
+
+  # Smoke tests rápidos para PRs
+  e2e-smoke:
     runs-on: ubuntu-latest
+    needs: unit-tests
+    if: github.event_name == 'pull_request'
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
     
     - name: Install dependencies
       run: npm ci
     
-    - name: Run E2E tests
-      run: npm run test:e2e
+    - name: Cache Cypress binary
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.CYPRESS_CACHE_FOLDER }}
+        key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          cypress-${{ runner.os }}-
+    
+    - name: Install Cypress
+      run: npx cypress install
+    
+    - name: Verify Cypress
+      run: npx cypress verify
+    
+    - name: Run Cypress smoke tests
+      uses: cypress-io/github-action@v6
+      with:
+        install: false
+        browser: chrome
+        spec: |
+          cypress/e2e/01-authentication.cy.js
+          cypress/e2e/04-integration-flows.cy.js
+        config: |
+          baseUrl=https://sensational-dragon-9cfbd2.netlify.app/
+,
+          defaultCommandTimeout=15000,
+          requestTimeout=15000,
+          responseTimeout=15000
       env:
-        CYPRESS_baseUrl: http://localhost:3000
+        CYPRESS_apiUrl: ${{ vars.CYPRESS_API_URL || 'https://backend-app-by7e.onrender.com/api' }}
+        CYPRESS_testUser_email: ${{ vars.TEST_USER_EMAIL || 'estefa@mail.com' }}
+        CYPRESS_testUser_password: ${{ secrets.TEST_USER_PASSWORD || 'ejemplo1235' }}
+        CYPRESS_production: true
+    
+    - name: Upload screenshots on failure
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots-smoke
+        path: cypress/screenshots
+        retention-days: 3
+
+  # Tests E2E completos para push y schedule
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    if: github.event_name == 'push' || github.event_name == 'schedule'
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
+        containers: [1, 2] # Paralelización
+        
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Cache Cypress binary
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.CYPRESS_CACHE_FOLDER }}
+        key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          cypress-${{ runner.os }}-
+    
+    - name: Install Cypress
+      run: npx cypress install
+    
+    - name: Verify Cypress
+      run: npx cypress verify
+    
+    - name: Run Cypress E2E tests
+      uses: cypress-io/github-action@v6
+      with:
+        install: false
+        browser: ${{ matrix.browser }}
+        record: ${{ github.event_name == 'push' && secrets.CYPRESS_RECORD_KEY != '' }}
+        parallel: ${{ github.event_name == 'push' && secrets.CYPRESS_RECORD_KEY != '' }}
+        group: 'E2E-${{ matrix.browser }}'
+        tag: ${{ github.event_name }}
+        config: |
+          baseUrl=https://sensational-dragon-9cfbd2.netlify.app/,
+          defaultCommandTimeout=20000,
+          requestTimeout=20000,
+          responseTimeout=20000,
+          pageLoadTimeout=30000
+      env:
+        CYPRESS_apiUrl: ${{ vars.CYPRESS_API_URL }}
+        CYPRESS_testUser_email: ${{ vars.TEST_USER_EMAIL }}
+        CYPRESS_testUser_password: ${{ secrets.TEST_USER_PASSWORD }}
+        CYPRESS_production: true
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Upload screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots-${{ matrix.browser }}-${{ matrix.containers }}
+        path: cypress/screenshots
+        retention-days: 7
+    
+    - name: Upload videos
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: cypress-videos-${{ matrix.browser }}-${{ matrix.containers }}
+        path: cypress/videos
+        retention-days: 3
+
+  # Tests específicos por navegador en diferentes viewports
+  e2e-responsive:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    if: github.event_name == 'schedule' # Solo en nightly builds
+    
+    strategy:
+      matrix:
+        viewport: 
+          - { width: 375, height: 667, name: 'mobile' }
+          - { width: 768, height: 1024, name: 'tablet' }
+          - { width: 1920, height: 1080, name: 'desktop' }
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Cache Cypress binary
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.CYPRESS_CACHE_FOLDER }}
+        key: cypress-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+    
+    - name: Run responsive tests
+      uses: cypress-io/github-action@v6
+      with:
+        browser: chrome
+        config: |
+          baseUrl=https://sensational-dragon-9cfbd2.netlify.app/,
+          viewportWidth=${{ matrix.viewport.width }},
+          viewportHeight=${{ matrix.viewport.height }}
+        spec: cypress/e2e/04-integration-flows.cy.js
+      env:
+        CYPRESS_apiUrl: ${{ vars.CYPRESS_API_URL }}
+        CYPRESS_testUser_email: ${{ vars.TEST_USER_EMAIL }}
+        CYPRESS_testUser_password: ${{ secrets.TEST_USER_PASSWORD }}
+        CYPRESS_production: true
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-responsive-${{ matrix.viewport.name }}
+        path: |
+          cypress/screenshots
+          cypress/videos
+        retention-days: 3
+
+  # Performance y accessibility tests
+  lighthouse-tests:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+        LHCI_SERVER_BASE_URL: https://sensational-dragon-9cfbd2.netlify.app/
+
+  # Notificaciones de resultados
+  notify-results:
+    runs-on: ubuntu-latest
+    needs: [unit-tests, e2e-smoke, e2e-tests]
+    if: always() && (github.event_name == 'push' || github.event_name == 'schedule')
+    
+    steps:
+    - name: Check test results
+      run: |
+        echo "Unit tests: ${{ needs.unit-tests.result }}"
+        echo "E2E smoke: ${{ needs.e2e-smoke.result }}"
+        echo "E2E tests: ${{ needs.e2e-tests.result }}"
+    
+    - name: Notify success
+      if: |
+        needs.unit-tests.result == 'success' && 
+        (needs.e2e-smoke.result == 'success' || needs.e2e-smoke.result == 'skipped') &&
+        (needs.e2e-tests.result == 'success' || needs.e2e-tests.result == 'skipped')
+      run: |
+        echo "Todos los tests pasaron correctamente"
+        # Agregar notificación a Slack/Discord si es necesario
+    
+    - name: Notify failure
+      if: |
+        needs.unit-tests.result == 'failure' || 
+        needs.e2e-smoke.result == 'failure' ||
+        needs.e2e-tests.result == 'failure'
+      run: |
+        echo "Algunos tests fallaron"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        # Agregar notificación de fallo si es necesario
+        exit 1
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [unit-tests, e2e-smoke, e2e-tests]
+    if: |
+      always() && 
+      github.event_name == 'push' && 
+      github.ref == 'refs/heads/main' &&
+      needs.unit-tests.result == 'success' && 
+      (needs.e2e-smoke.result == 'success' || needs.e2e-smoke.result == 'skipped') &&
+      (needs.e2e-tests.result == 'success' || needs.e2e-tests.result == 'skipped')
+    
+    steps:
+    - name: Deploy notification
+      run: |
+        echo "Ready to deploy - all tests passed!"
+        
