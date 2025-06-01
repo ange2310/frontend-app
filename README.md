@@ -108,6 +108,7 @@ Una aplicación completa de entrega de comida desarrollada con React, Node.js y 
 
 ## 🧪 Testing y Calidad
 
+
 Pruebas Automatizadas con Cypress
 El sistema FastFood ha sido sometido a una exhaustiva batería de pruebas automatizadas utilizando Cypress, logrando una cobertura del 100% con 40 pruebas exitosas. Las pruebas se ejecutaron específicamente para el perfil de administrador, validando desde funcionalidades básicas de autenticación hasta flujos complejos de gestión de productos y restaurantes.
 La suite de pruebas se estructuró en tres módulos principales:
@@ -151,6 +152,9 @@ Resultados de Testing
 ✅ Experiencia de usuario: Confirmación de interfaces intuitivas y funcionales
 
 Los resultados demuestran la robustez del sistema y su preparación para un entorno de producción.
+
+## Nota:
+-Se realizarón también pruebas en jest, dicha información se encuentra en la documentación completa del proyecto 
 
 ## 📋 Prerequisites
 
