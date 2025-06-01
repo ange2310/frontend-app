@@ -106,6 +106,52 @@ Una aplicación completa de entrega de comida desarrollada con React, Node.js y 
 - **Tiempo Real**: Integración con Firebase
 - **Servicio de Correo**: Nodemailer
 
+## 🧪 Testing y Calidad
+
+Pruebas Automatizadas con Cypress
+El sistema FastFood ha sido sometido a una exhaustiva batería de pruebas automatizadas utilizando Cypress, logrando una cobertura del 100% con 40 pruebas exitosas. Las pruebas se ejecutaron específicamente para el perfil de administrador, validando desde funcionalidades básicas de autenticación hasta flujos complejos de gestión de productos y restaurantes.
+La suite de pruebas se estructuró en tres módulos principales:
+🔐 Autenticación y Login (16 pruebas)
+
+Validación de UI: Renderizado correcto de la página de login con todos los elementos esenciales
+Campos Obligatorios: Validación HTML5 automática para prevenir envíos con campos vacíos
+Toggle de Contraseña: Funcionalidad de mostrar/ocultar contraseña con estados correctos
+Checkbox "Recuérdame": Gestión de persistencia de sesiones y preferencias de usuario
+Manejo de Errores: Validación de credenciales incorrectas y errores de conectividad de red
+Autenticación Exitosa: Flujo completo con redirección basada en roles (Admin, Repartidor, Cliente)
+Navegación: Validación de enlaces hacia registro y recuperación de contraseña
+
+🏪 Gestión de Restaurantes (11 pruebas)
+
+Carga de Datos: Validación de API calls y renderizado correcto de interfaces
+Estados Vacíos: Manejo gracioso cuando no existen restaurantes registrados
+Visualización de Listas: Mostrado correcto de restaurantes existentes con datos mock
+Formularios de Creación: Validación de campos y navegación a rutas de creación
+Autenticación Persistente: Mantenimiento de tokens durante navegación entre secciones
+Responsive Design: Validación en múltiples viewports (móvil: 375x667, tablet: 768x1024)
+Manejo de Errores: Respuestas apropiadas a fallos de API con opciones de reintento
+
+🍕 Gestión de Productos (13 pruebas)
+
+Navegación Contextual: Transición desde gestión de restaurantes manteniendo ID de contexto
+Componente ProductManagement: Validación completa de elementos UI y funcionalidad
+Modal ProductForm: Interacciones complejas con overlay, formularios y carga dinámica de sucursales
+Llenado de Formularios: Validación exhaustiva de campos básicos, categorías y sucursales
+Campos Requeridos: Comportamiento correcto ante formularios incompletos
+Búsqueda en Tiempo Real: Sistema de filtrado con delays y estados vacíos
+Flujos Completos: Validación end-to-end desde dashboard hasta creación de productos
+Estados Especiales: Manejo de casos edge como productos vacíos y estados de loading
+
+Resultados de Testing
+
+✅ 100% de pruebas exitosas: 40/40 casos de prueba pasados
+✅ Cobertura completa: Todos los flujos críticos validados
+✅ Múltiples dispositivos: Testing responsive en móvil, tablet y desktop
+✅ Manejo de errores: Validación robusta de casos de fallo
+✅ Experiencia de usuario: Confirmación de interfaces intuitivas y funcionales
+
+Los resultados demuestran la robustez del sistema y su preparación para un entorno de producción.
+
 ## 📋 Prerequisites
 
 - Node.js (v14 or higher)
