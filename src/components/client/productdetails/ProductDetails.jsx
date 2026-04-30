@@ -4,7 +4,7 @@ import { FaArrowLeft, FaPlus, FaMinus, FaStore, FaShoppingCart } from 'react-ico
 import { useAuth } from '../../../hooks/useAuth';
 import { CartContext } from '../../../contexts/CartContext';
 import ApiService from '../../../services/api';
-import RestaurantChangeModal from '../restaurantchangemodal/RestaurantChangeModal';
+import RestaurantChangeModal from '../restaurantChangeModal/RestaurantChangeModal';
 import './ProductDetails.css';
 
 const DEFAULT_IMAGE = 'https://via.placeholder.com/600x400.png?text=No+image+available';

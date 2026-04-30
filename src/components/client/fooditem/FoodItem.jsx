@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { FaPlus, FaMinus, FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../../contexts/CartContext';
-import RestaurantChangeModal from '../restaurantchangemodal/RestaurantChangeModal';
+import RestaurantChangeModal from '../restaurantChangeModal/RestaurantChangeModal';
 import './FoodItem.css';
 
 const DEFAULT_IMAGE = 'https://via.placeholder.com/600x400.png?text=No+image+available';
