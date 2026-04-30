@@ -1,5 +1,6 @@
 /*Versión Samuel*/
 /* src/styles/global.css - Versión Profesional */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
 :root {
   /* Paleta de colores principal - tonos más sofisticados */
   --primary-color: #ff6b3d;
