@@ -95,6 +95,7 @@ function Register() {
       } else {
         setCedulaValid(false);
         setCedulaError('');
+        setValidatingCedula(false);
       }
     };
 
@@ -128,6 +129,7 @@ function Register() {
       } else {
         setTelefonoValid(false);
         setTelefonoError('');
+        setValidatingTelefono(false);
       }
     };
 
