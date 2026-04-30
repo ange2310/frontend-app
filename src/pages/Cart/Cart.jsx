@@ -7,7 +7,7 @@ import ApiService from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 import './Cart.css';
 
-const DEFAULT_IMAGE = '/images/food-placeholder.jpg';
+const DEFAULT_IMAGE = 'https://via.placeholder.com/600x400.png?text=No+image+available';
 
 const getImageUrl = (product) => {
   const imageFields = ['imagen', 'imageUrl', 'image', 'foto', 'picture'];

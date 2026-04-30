@@ -56,7 +56,7 @@
   .hero-section {
     height: 300px;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('/images/food-banner.jpg') no-repeat center center;
+                url('https://via.placeholder.com/1200x300.png?text=Food+Banner') no-repeat center center;
     background-size: cover;
     position: relative;
     margin-bottom: 30px;

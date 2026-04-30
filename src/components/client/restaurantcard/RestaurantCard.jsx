@@ -3,7 +3,7 @@ import { FaStar, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
 import { useRating } from '../../../hooks/useRating';
 import './RestaurantCard.css';
 
-const DEFAULT_IMAGE = '/images/restaurant-placeholder.jpg';
+const DEFAULT_IMAGE = 'https://via.placeholder.com/600x400.png?text=No+image+available';
 
 const RestaurantCard = ({ restaurant, onClick }) => {
   const { calificacionPromedio, totalCalificaciones, loading } = useRating(restaurant.id);

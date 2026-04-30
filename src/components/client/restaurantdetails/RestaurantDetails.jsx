@@ -205,6 +205,8 @@ const RestaurantDetails = () => {
     );
   }
   
+  const DEFAULT_RESTAURANT_BANNER = 'https://via.placeholder.com/1200x400.png?text=Restaurant+Banner';
+
   return (
     <div className="restaurant-details-wrapper">
       {activePedido && (
@@ -218,8 +220,9 @@ const RestaurantDetails = () => {
       <div className="restaurant-header">
         <div className="restaurant-banner">
           <img 
-            src={restaurant.imagen || '/images/restaurant-banner.jpg'} 
+            src={restaurant.imagen || DEFAULT_RESTAURANT_BANNER} 
             alt={restaurant.nombre}
+            onError={(e) => { e.target.onerror = null; e.target.src = DEFAULT_RESTAURANT_BANNER; }}
           />
           <button className="back-button" onClick={handleBack}>
             <FaArrowLeft />

@@ -101,7 +101,7 @@ const CreditCardForm = ({ clientSecret, pedidoId, onSuccess, onError }) => {
       <div className="secured-by">
         <div className="powered-by-stripe">
           <span>Pago seguro con</span>
-          <img src="/images/powered-by-stripe.svg" alt="Powered by Stripe" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Stripe_Logo%2C_revised_2016.svg" alt="Powered by Stripe" />
         </div>
       </div>
     </div>
